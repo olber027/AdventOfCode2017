@@ -93,6 +93,7 @@ class Worker(object):
         self.step.doWork(1)
         if self.step.done():
             self.working = False
+            self.step = None
             return self.step.id
         return ""
 
@@ -139,9 +140,7 @@ while len(steps) > 0:
     for id in completedStepList:
         [steps[stepID].updatePrereq(id) for stepID in steps.keys()]
         del steps[id]
-    completedSteps += completedStepList
-    # print("{0}\t{1}\t{2}\t{3}".format(time, workers[0].step.id if workers[0].step else ".",
-    #                                   workers[1].step.id if workers[1].step else ".", completedSteps))
+
     time += 1
 
 print(time)
