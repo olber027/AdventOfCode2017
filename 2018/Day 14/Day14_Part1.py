@@ -38,3 +38,25 @@ After 2018 recipes, the scores of the next ten would be 5941429882.
 What are the scores of the ten recipes immediately after the number of recipes in your puzzle input?
 '''
 
+def splitDigits(num):
+    return [int(x) for x in list(str(num))]
+
+def makeNewRecipes(firstScore, secondScore):
+    newScore = firstScore + secondScore
+    return splitDigits(newScore)
+
+target = int(open("InputFiles/Day14.dat", "r").readline().strip())
+
+scoreboard = [3, 7]
+first = 0
+second = 1
+
+while len(scoreboard) < (target + 10):
+    newScores = makeNewRecipes(scoreboard[first], scoreboard[second])
+    scoreboard.extend(newScores)
+    first = (first + scoreboard[first] + 1) % len(scoreboard)
+    second = (second + scoreboard[second] + 1) % len(scoreboard)
+
+finalNum = []
+[finalNum.append(str(scoreboard[x])) for x in range(target, target+10)]
+print("".join(finalNum))
